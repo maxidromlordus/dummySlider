@@ -5,13 +5,18 @@ const { src, dest } = require("gulp");
 const { series } = require("gulp");
 const babel = require("gulp-babel");
 const { watch } = require("gulp");
+const imagemin = require("gulp-imagemin");
+
+function minimage() {
+  return src("src/images/*").pipe(imagemin()).pipe(dest("dist/images"));
+}
 
 function transpile() {
-  return src("src/index.js").pipe(babel()).pipe(dest("dist/"));
+  return src("dist/bundle.js").pipe(babel()).pipe(dest("dist/"));
 }
 
 function brsfi() {
-  return browserify("./dist/index.js")
+  return browserify("./src/index.js")
     .bundle()
     .pipe(source("bundle.js"))
     .pipe(dest("./dist/"));
@@ -25,5 +30,5 @@ function brsfi() {
 
 // enable this if you want manualy run you build
 exports.default = function () {
-  series(transpile, brsfi);
+  watch("src/index.js", series(minimage, brsfi, transpile));
 };
