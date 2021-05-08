@@ -12,13 +12,13 @@ function minimage() {
 }
 
 function transpile() {
-  return src("dist/bundle.js").pipe(babel()).pipe(dest("dist/"));
+  return src("dist/bundle1.js").pipe(babel()).pipe(dest("dist/"));
 }
 
 function brsfi() {
-  return browserify("./src/index.js")
+  return browserify("./src/index1.js")
     .bundle()
-    .pipe(source("bundle.js"))
+    .pipe(source("bundle1.js"))
     .pipe(dest("./dist/"));
 }
 
@@ -30,5 +30,5 @@ function brsfi() {
 
 // enable this if you want manualy run you build
 exports.default = function () {
-  watch("src/index.js", series(minimage, brsfi, transpile));
+  watch("src/index1.js", series(minimage, brsfi, transpile));
 };

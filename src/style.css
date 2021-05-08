@@ -14,13 +14,19 @@ span {
   justify-content: center;
   align-items: center;
 }
-#img-container {
+#img-window {
   width: 800px;
   height: 600px;
   background-color: blueviolet;
   box-shadow: 0 0 10px rgba(255, 253, 253, 0.3);
+  overflow: hidden;
 }
 
+#img-container {
+  height: 600px;
+  display: flex;
+  transition: 0.5s all;
+}
 #img-num {
   display: flex;
   justify-content: center;
