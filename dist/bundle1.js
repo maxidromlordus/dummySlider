@@ -42,6 +42,7 @@
     var imageView = document.createElement("img");
     var leftButton = document.getElementById("left");
     var rightButton = document.getElementById("right");
+    var dotsWrapper = document.querySelector(".dots-wrapper");
     var imgWindowWidth = window.getComputedStyle(imageWindow).width;
     imageContainer.style.width = 100 * arr.length + "%";
 
@@ -51,11 +52,17 @@
       var count = 0;
 
       for (var i = 0; i < arr.length; i++) {
+        //adding slides to wrapper
         var slideImg = "<img src=\"./images/".concat(arr[i], "\">");
         var slide = document.createElement("div"); //
 
         slide.innerHTML = slideImg;
-        imageContainer.appendChild(slide);
+        imageContainer.appendChild(slide); //adding dots to dots wrapper
+
+        var dot = document.createElement("div");
+        dot.classList.add("dot");
+        dot.innerHTML = "<span>&#8226;</span>";
+        dotsWrapper.appendChild(dot);
         count += 1;
       }
 
@@ -63,10 +70,26 @@
 
       if (displayCount < 10) {
         displayCount = "0".concat(displayCount);
-      }
+      } //dots event-listener
 
+
+      var dots = document.querySelectorAll(".dot");
+      dots.forEach(function (dot, index) {
+        dot.addEventListener("click", function () {
+          // change button style
+          dots.forEach(function (dot) {
+            dot.classList.remove("active-dot");
+          });
+          dot.classList.add("active-dot");
+          console.log("clicked on dot № " + index);
+          offset = +imgWindowWidth.slice(0, imgWindowWidth.length - 2) * index;
+          imageContainer.style.transform = "translateX(-".concat(offset, "px)"); // text changes
+
+          currentPosition = index + 1;
+          imageText.innerText = index < 10 ? "Image 0".concat(index + 1, " of ").concat(displayCount) : "Image ".concat(index + 1, " of ").concat(displayCount);
+        });
+      });
       imageText.innerText = currentPosition < 10 ? "Image 0".concat(currentPosition, " of ").concat(displayCount) : "Image ".concat(currentPosition, " of ").concat(displayCount);
-      imageView.src = "./images/".concat(arr[currentPosition - 1]);
       leftButton.addEventListener("click", function () {
         console.log("clicked left");
 
@@ -74,10 +97,26 @@
           offset = +imgWindowWidth.slice(0, imgWindowWidth.length - 2) * (arr.length - 1);
           currentPosition = count;
           imageText.innerText = currentPosition < 10 ? "Image 0".concat(currentPosition, " of ").concat(displayCount) : "Image ".concat(currentPosition, " of ").concat(displayCount);
+          dots.forEach(function (dot, index) {
+            console.log(index + 1, currentPosition);
+            dot.classList.remove("active-dot");
+
+            if (currentPosition === index + 1) {
+              dot.classList.add("active-dot");
+            }
+          });
         } else {
           offset -= +imgWindowWidth.slice(0, imgWindowWidth.length - 2);
           currentPosition -= 1;
           imageText.innerText = currentPosition < 10 ? "Image 0".concat(currentPosition, " of ").concat(displayCount) : "Image ".concat(currentPosition, " of ").concat(displayCount);
+          dots.forEach(function (dot, index) {
+            console.log(index + 1, currentPosition);
+            dot.classList.remove("active-dot");
+
+            if (currentPosition === index + 1) {
+              dot.classList.add("active-dot");
+            }
+          });
         }
 
         imageContainer.style.transform = "translateX(-".concat(offset, "px)");
@@ -89,10 +128,26 @@
           offset = 0;
           currentPosition = 1;
           imageText.innerText = currentPosition < 10 ? "Image 0".concat(currentPosition, " of ").concat(displayCount) : "Image ".concat(currentPosition, " of ").concat(displayCount);
+          dots.forEach(function (dot, index) {
+            console.log(index + 1, currentPosition);
+            dot.classList.remove("active-dot");
+
+            if (currentPosition === index + 1) {
+              dot.classList.add("active-dot");
+            }
+          });
         } else {
           offset += +imgWindowWidth.slice(0, imgWindowWidth.length - 2);
           currentPosition += 1;
           imageText.innerText = currentPosition < 10 ? "Image 0".concat(currentPosition, " of ").concat(displayCount) : "Image ".concat(currentPosition, " of ").concat(displayCount);
+          dots.forEach(function (dot, index) {
+            console.log(index + 1, currentPosition);
+            dot.classList.remove("active-dot");
+
+            if (currentPosition === index + 1) {
+              dot.classList.add("active-dot");
+            }
+          });
         }
 
         imageContainer.style.transform = "translateX(-".concat(offset, "px)");

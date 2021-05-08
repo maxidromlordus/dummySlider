@@ -45,4 +45,23 @@ span {
   margin: 20px;
   width: 50px;
   height: 500px;
+  cursor: pointer;
+}
+
+.dots-wrapper {
+  height: 50px;
+  width: 800px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.dot {
+  color: rgb(62, 102, 131);
+  cursor: pointer;
+}
+
+.active-dot {
+  color: rgb(255, 255, 255);
 }
